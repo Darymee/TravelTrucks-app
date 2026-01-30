@@ -1,0 +1,15 @@
+.content {
+  padding: 48px 0;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .content {
+    grid-template-columns: 360px 1fr;
+    column-gap: 64px;
+  }
+}

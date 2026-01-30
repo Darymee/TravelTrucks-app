@@ -75,4 +75,13 @@ const campersSlice = createSlice({
 export const { resetSearchResults, increaseVisibleCount, resetVisibleCount } =
   campersSlice.actions;
 
+export const selectCampersItems = state => state.campers.items;
+export const selectCampersTotal = state => state.campers.total;
+export const selectCampersIsLoading = state => state.campers.isLoading;
+export const selectCampersError = state => state.campers.error;
+export const selectVisibleCount = state => state.campers.visibleCount;
+export const selectCamperDetailsById = state => state.campers.detailsById;
+export const selectCamperDetails = (state, id) =>
+  state.campers.detailsById ? state.campers.detailsById[id] : undefined;
+
 export default campersSlice.reducer;

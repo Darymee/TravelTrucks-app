@@ -1,6 +1,7 @@
 .header {
   padding: 16px;
-  background-color: var(--white);
+  background-color: var(--inputs);
+  border-bottom: 1px solid var(--badges);
 }
 
 .headerContainer {

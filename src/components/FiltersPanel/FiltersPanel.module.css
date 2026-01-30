@@ -1,0 +1,58 @@
+.locationFilter {
+  margin-bottom: 40px;
+}
+
+.label {
+  display: block;
+  line-height: 1.5;
+  color: #10182899;
+
+  margin-bottom: 8px;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  pointer-events: none;
+  fill: var(--main);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  height: 56px;
+  padding: 0 16px 0 48px;
+
+  border-radius: 12px;
+
+  color: var(--main);
+  background-color: var(--inputs);
+  border: none;
+
+  line-height: 1.5;
+}
+
+.input::placeholder {
+  color: var(--main);
+}
+
+.filtersLabel {
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.categoryFilterWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.searchBtn {
+  width: 166px;
+}

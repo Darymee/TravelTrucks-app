@@ -1,0 +1,22 @@
+.category {
+  border-radius: 100px;
+
+  padding: 14px 18px;
+
+  background-color: var(--badges);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.icon {
+  fill: var(--main);
+}
+
+.name {
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--main);
+}

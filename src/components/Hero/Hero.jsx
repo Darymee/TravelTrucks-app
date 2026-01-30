@@ -1,7 +1,8 @@
 import React from 'react';
 
 import styles from './Hero.module.css';
-import { Link } from 'react-router-dom';
+
+import StyledLink from '../StyledLink/StyledLink';
 
 const Hero = () => {
   return (
@@ -12,9 +13,11 @@ const Hero = () => {
           <p className={styles.subtitle}>
             You can find everything you want in our catalog
           </p>
-          <Link to="/catalog" className={styles.viewBtn}>
-            View Now
-          </Link>
+          <StyledLink
+            to="/catalog"
+            className={styles.viewBtn}
+            text="View Catalog"
+          />
         </div>
       </div>
     </section>

@@ -4,7 +4,7 @@ import { lazy, Suspense } from 'react';
 import Loader from './Loader/Loader';
 
 const HomePage = lazy(() => import('../pages/HomePage'));
-const CatalogPage = lazy(() => import('../pages/CatalogPage'));
+const CatalogPage = lazy(() => import('../pages/CatalogPage/CatalogPage'));
 const CamperDetailsPage = lazy(() => import('../pages/CamperDetailsPage'));
 
 export function AppRouter() {
