@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const CamperDetailsPage = ({ camper }) => {
+const CamperDetailsPage = ({ camper }) => {
   return (
     <>
       <Helmet>
@@ -14,3 +14,5 @@ export const CamperDetailsPage = ({ camper }) => {
     </>
   );
 };
+
+export default CamperDetailsPage;

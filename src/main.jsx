@@ -7,6 +7,9 @@ import { HelmetProvider } from '@dr.pogodin/react-helmet';
 import { store } from './redux/store';
 import './index.css';
 import App from './App.jsx';
+import { initHeaderHeight } from './utils/setHeaderHeight';
+
+initHeaderHeight();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -1,3 +1,5 @@
+import spriteUrl from '../../assets/sprite.svg';
+
 export default function Icon({
   name,
   size = 24,
@@ -11,7 +13,7 @@ export default function Icon({
 
   return (
     <svg width={w} height={h} className={className} {...props}>
-      <use href={`../../assets/sprite.svg#${name}`} />
+      <use href={`${spriteUrl}#${name}`} />
     </svg>
   );
 }
