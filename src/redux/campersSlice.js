@@ -1,14 +1,138 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchCamperById, fetchCampers } from '../api/api';
 
+function applyClientFilters(items, filters) {
+  if (!filters) return items;
+  const location = (filters.location || '').trim().toLowerCase();
+  const form = filters.form || '';
+  const features = filters.features || {};
+
+  const activeFeatureKeys = Object.keys(features).filter(k => features[k]);
+
+  return (items || []).filter(camper => {
+    if (location) {
+      const camperLocation = String(camper.location || '').toLowerCase();
+      if (!camperLocation.includes(location)) return false;
+    }
+
+    if (form) {
+      if (String(camper.form || '') !== String(form)) return false;
+    }
+
+    for (const key of activeFeatureKeys) {
+      if (key === 'automatic') {
+        if (camper.transmission !== 'automatic') return false;
+        continue;
+      }
+      if (key === 'petrol') {
+        if (camper.engine !== 'petrol') return false;
+        continue;
+      }
+      if (!camper[key]) return false;
+    }
+
+    return true;
+  });
+}
+
+/**
+ * Формує params для бекенда.
+ * Важливо: location НЕ кидаємо як substring (бо API може не підтримувати),
+ * а фільтруємо на клієнті через applyClientFilters().
+ */
+function buildServerParams(filters, page, limit) {
+  const params = { page, limit };
+
+  if (filters?.form) params.form = filters.form;
+
+  const features = filters?.features || {};
+  for (const [key, value] of Object.entries(features)) {
+    if (!value) continue;
+
+    if (key === 'automatic') {
+      params.transmission = 'automatic';
+      continue;
+    }
+    if (key === 'petrol') {
+      params.engine = 'petrol';
+      continue;
+    }
+
+    // Булеві поля: AC, kitchen, bathroom, TV, radio, refrigerator, microwave, gas, water
+    params[key] = true;
+  }
+
+  return params;
+}
+
+/**
+ * NEW SEARCH (page=1)
+ * Повертає { items, totalFromServer, receivedCount, page }
+ */
 export const getCampers = createAsyncThunk(
   'campers/getAll',
   async (_, thunkAPI) => {
     try {
-      // API повертає { total, items } :contentReference[oaicite:0]{index=0}
-      return await fetchCampers();
+      const state = thunkAPI.getState();
+      const filters = state.filters;
+      const { limit } = state.campers;
+
+      const page = 1;
+      const params = buildServerParams(filters, page, limit);
+
+      const data = await fetchCampers(params); // очікуємо { total, items }
+      const rawItems = data?.items ?? data ?? [];
+      const filteredItems = applyClientFilters(rawItems, filters);
+
+      return {
+        items: filteredItems,
+        totalFromServer: data?.total ?? null,
+        receivedCount: Array.isArray(rawItems) ? rawItems.length : 0,
+        page,
+      };
     } catch (e) {
       return thunkAPI.rejectWithValue(e?.message ?? 'Failed to load campers');
+    }
+  }
+);
+
+/**
+ * LOAD MORE (page = currentPage + 1)
+ */
+export const loadMoreCampers = createAsyncThunk(
+  'campers/loadMore',
+  async (_, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState();
+      const filters = state.filters;
+      const { page: currentPage, limit, hasMore } = state.campers;
+
+      if (!hasMore) {
+        return {
+          items: [],
+          totalFromServer: null,
+          receivedCount: 0,
+          page: currentPage,
+        };
+      }
+
+      const page = currentPage + 1;
+      const params = buildServerParams(filters, page, limit);
+
+      const data = await fetchCampers(params);
+      const rawItems = data?.items ?? data ?? [];
+      const filteredItems = applyClientFilters(rawItems, filters);
+
+      return {
+        items: filteredItems,
+        totalFromServer: data?.total ?? null,
+        receivedCount: Array.isArray(rawItems) ? rawItems.length : 0,
+        page,
+      };
+    } catch (e) {
+      return thunkAPI.rejectWithValue(
+        e?.message ?? 'Failed to load more campers'
+      );
     }
   }
 );
@@ -26,15 +150,17 @@ export const getCamperDetails = createAsyncThunk(
 
 const initialState = {
   items: [],
-  total: 0,
+  total: 0, // можемо показувати як totalFromServer (якщо треба)
+  page: 1,
+  limit: 4,
+  hasMore: true,
+
   isLoading: false,
   error: null,
 
   detailsById: {},
   detailsLoading: false,
   detailsError: null,
-
-  visibleCount: 4,
 };
 
 const campersSlice = createSlice({
@@ -44,32 +170,62 @@ const campersSlice = createSlice({
     resetSearchResults(state) {
       state.items = [];
       state.total = 0;
+      state.page = 1;
+      state.hasMore = true;
       state.error = null;
-      state.visibleCount = 4;
-    },
-    increaseVisibleCount(state) {
-      state.visibleCount += 4;
-    },
-    resetVisibleCount(state) {
-      state.visibleCount = 4;
     },
   },
   extraReducers: builder => {
     builder
-      // LIST
+      // NEW SEARCH
       .addCase(getCampers.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(getCampers.fulfilled, (state, action) => {
         state.isLoading = false;
+
         state.items = action.payload.items ?? [];
-        state.total = action.payload.total ?? state.items.length;
+        state.page = action.payload.page ?? 1;
+
+        // hasMore базуємо на тому, чи прийшла повна сторінка з сервера
+        state.hasMore = (action.payload.receivedCount ?? 0) === state.limit;
+
+        // total з сервера можемо зберігати (але памʼятай: якщо location фільтруємо на клієнті,
+        // total буде не "точний" під location substring)
+        state.total = action.payload.totalFromServer ?? state.items.length;
       })
       .addCase(getCampers.rejected, (state, action) => {
         state.isLoading = false;
         state.error =
           action.payload ?? action.error?.message ?? 'Failed to load campers';
+      })
+
+      // LOAD MORE
+      .addCase(loadMoreCampers.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(loadMoreCampers.fulfilled, (state, action) => {
+        state.isLoading = false;
+
+        const newItems = action.payload.items ?? [];
+        state.items.push(...newItems);
+
+        state.page = action.payload.page ?? state.page;
+        state.hasMore = (action.payload.receivedCount ?? 0) === state.limit;
+
+        // total можна оновити (за бажанням)
+        if (action.payload.totalFromServer != null) {
+          state.total = action.payload.totalFromServer;
+        }
+      })
+      .addCase(loadMoreCampers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error =
+          action.payload ??
+          action.error?.message ??
+          'Failed to load more campers';
       })
 
       // DETAILS
@@ -79,8 +235,6 @@ const campersSlice = createSlice({
       })
       .addCase(getCamperDetails.fulfilled, (state, action) => {
         state.detailsLoading = false;
-
-        // захист на випадок, якщо payload не має id
         const camper = action.payload;
         if (camper?.id != null) {
           state.detailsById[camper.id] = camper;
@@ -94,8 +248,7 @@ const campersSlice = createSlice({
   },
 });
 
-export const { resetSearchResults, increaseVisibleCount, resetVisibleCount } =
-  campersSlice.actions;
+export const { resetSearchResults } = campersSlice.actions;
 
 // selectors
 export const selectCampersItems = state => state.campers.items;
@@ -103,7 +256,8 @@ export const selectCampersTotal = state => state.campers.total;
 export const selectCampersIsLoading = state => state.campers.isLoading;
 export const selectCampersError = state => state.campers.error;
 
-export const selectVisibleCount = state => state.campers.visibleCount;
+export const selectCampersHasMore = state => state.campers.hasMore;
+export const selectCampersPage = state => state.campers.page;
 
 export const selectCamperDetailsMap = state => state.campers.detailsById;
 export const selectCamperDetailsLoading = state => state.campers.detailsLoading;

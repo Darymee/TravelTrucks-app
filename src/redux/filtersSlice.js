@@ -5,9 +5,11 @@ const initialState = {
   form: '',
   features: {
     AC: false,
+    automatic: false,
     kitchen: false,
     bathroom: false,
     TV: false,
+    petrol: false,
     radio: false,
     refrigerator: false,
     microwave: false,

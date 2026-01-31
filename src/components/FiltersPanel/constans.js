@@ -1,44 +1,55 @@
 // categories.ts
 export const vehicleEquipmentCategories = [
-  { label: 'AC', icon: 'icon-ac', isAvailable: v => Boolean(v.AC) },
+  { label: 'AC', icon: 'icon-ac', filterKey: 'AC', isAvailable: v => Boolean(v.AC) },
   {
     label: 'Automatic',
     icon: 'icon-diagram',
+    filterKey: 'automatic',
     isAvailable: v => v.transmission === 'automatic',
   },
   {
     label: 'Kitchen',
     icon: 'icon-kitchen',
+    filterKey: 'kitchen',
     isAvailable: v => Boolean(v.kitchen),
   },
-  { label: 'TV', icon: 'icon-tv', isAvailable: v => Boolean(v.TV) },
+  { label: 'TV', icon: 'icon-tv', filterKey: 'TV', isAvailable: v => Boolean(v.TV) },
   {
     label: 'Bathroom',
     icon: 'icon-bathroom',
+    filterKey: 'bathroom',
     isAvailable: v => Boolean(v.bathroom),
   },
   {
     label: 'Petrol',
     icon: 'icon-petrol',
+    filterKey: 'petrol',
     isAvailable: v => v.engine === 'petrol',
   },
-  { label: 'Radio', icon: 'icon-radio', isAvailable: v => Boolean(v.radio) },
+  { label: 'Radio', icon: 'icon-radio', filterKey: 'radio', isAvailable: v => Boolean(v.radio) },
   {
     label: 'Refrigerator',
     icon: 'icon-refrigerator',
+    filterKey: 'refrigerator',
     isAvailable: v => Boolean(v.refrigerator),
   },
   {
     label: 'Microwave',
     icon: 'icon-microwave',
+    filterKey: 'microwave',
     isAvailable: v => Boolean(v.microwave),
   },
-  { label: 'Gas', icon: 'icon-gas', isAvailable: v => Boolean(v.gas) },
-  { label: 'Water', icon: 'icon-water', isAvailable: v => Boolean(v.water) },
+  { label: 'Gas', icon: 'icon-gas', filterKey: 'gas', isAvailable: v => Boolean(v.gas) },
+  { label: 'Water', icon: 'icon-water', filterKey: 'water', isAvailable: v => Boolean(v.water) },
 ];
 
 export const vehicleTypeCategories = [
-  { label: 'Van', icon: 'icon-van' },
-  { label: 'Fully Integrated', icon: 'icon-fully-integrated' },
-  { label: 'Alcove', icon: 'icon-alcove' },
+  // value - очікувані значення поля `form` у даних (під GoIT/mockAPI задачі)
+  { label: 'Van', icon: 'icon-van', value: 'panelTruck' },
+  {
+    label: 'Fully Integrated',
+    icon: 'icon-fully-integrated',
+    value: 'fullyIntegrated',
+  },
+  { label: 'Alcove', icon: 'icon-alcove', value: 'alcove' },
 ];

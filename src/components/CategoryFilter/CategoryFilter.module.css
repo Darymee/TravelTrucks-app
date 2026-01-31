@@ -52,3 +52,7 @@
 .categoryButton:focus-visible {
   border-color: var(--button);
 }
+
+.active {
+  border-color: var(--button);
+}

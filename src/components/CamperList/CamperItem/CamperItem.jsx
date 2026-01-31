@@ -54,6 +54,8 @@ const CamperItem = ({ item }) => {
           text=" Show more"
           to={`/catalog/${item.id}`}
           className={styles.showMoreBtn}
+          target="_blank"
+          rel="noopener noreferrer"
         />
       </div>
     </div>
