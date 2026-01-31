@@ -5,6 +5,8 @@ import Category from '../../Category/Category';
 
 import styles from './CamperItem.module.css';
 import StyledLink from '../../StyledLink/StyledLink';
+import InfoContent from '../../InfoContent/InfoContent';
+import Price from '../../Price/Price';
 
 const CamperItem = ({ item }) => {
   const availableCategories = vehicleEquipmentCategories.filter(c =>
@@ -24,16 +26,7 @@ const CamperItem = ({ item }) => {
         <div className={styles.camperHeader}>
           <h2 className={styles.camperName}>{item.name}</h2>
           <div className={styles.camperHeaderInfo}>
-            <p className={styles.camperPrice}>
-              {new Intl.NumberFormat('de-AT', {
-                style: 'currency',
-                currency: 'EUR',
-                currencyDisplay: 'symbol',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-                useGrouping: false,
-              }).format(item.price)}
-            </p>
+            <Price price={item.price} />
             <button type="button" className={styles.heartBtn}>
               <Icon
                 name="icon-heart"
@@ -44,18 +37,11 @@ const CamperItem = ({ item }) => {
             </button>
           </div>
         </div>
-        <div className={styles.camperBottomInfo}>
-          <div className={styles.camperRating}>
-            <Icon name="icon-star" size={16} />
-            <p>
-              {item.rating} ({item.reviews.length} Reviews)
-            </p>
-          </div>
-          <div className={styles.camperLocation}>
-            <Icon name="icon-map" size={16} className={styles.iconMap} />
-            <p>{item.location}</p>
-          </div>
-        </div>
+        <InfoContent
+          review={item.reviews}
+          rating={item.rating}
+          location={item.location}
+        />
         <p className={styles.camperDescription}>{item.description}</p>
         <ul className={styles.categoryList}>
           {availableCategories.map(category => (
@@ -66,7 +52,7 @@ const CamperItem = ({ item }) => {
         </ul>
         <StyledLink
           text=" Show more"
-          to={`/camper/${item.id}`}
+          to={`/catalog/${item.id}`}
           className={styles.showMoreBtn}
         />
       </div>

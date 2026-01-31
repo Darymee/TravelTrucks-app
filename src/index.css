@@ -9,8 +9,8 @@
   --white: #ffffff;
   --button: #e44848;
   --button-hover: #d84343;
-  --rating: #ffc531;
-
+  --star: #ffc531;
+  --error: #d32f2f;
   font-family:
     'Inter',
     -apple-system,
@@ -69,7 +69,8 @@ a {
 }
 
 button,
-input {
+input,
+textarea {
   cursor: pointer;
   font-family: inherit;
 }
@@ -84,7 +85,8 @@ img {
   height: auto;
 }
 
-input {
+input,
+textarea {
   outline: none;
 }
 
