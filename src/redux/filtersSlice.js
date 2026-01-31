@@ -5,16 +5,15 @@ const initialState = {
   form: '',
   features: {
     AC: false,
-    automatic: false,
-    kitchen: false,
     bathroom: false,
+    kitchen: false,
     TV: false,
-    petrol: false,
     radio: false,
     refrigerator: false,
     microwave: false,
     gas: false,
     water: false,
+    // + whatever else you have
   },
 };
 
@@ -32,6 +31,7 @@ const filtersSlice = createSlice({
       const key = action.payload;
       state.features[key] = !state.features[key];
     },
+
     resetFilters() {
       return initialState;
     },

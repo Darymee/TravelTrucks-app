@@ -1,13 +1,17 @@
 import React, { useMemo } from 'react';
 import Icon from '../Icon/Icon';
-
 import styles from './FiltersPanel.module.css';
 import { vehicleEquipmentCategories, vehicleTypeCategories } from './constans';
 import CategoryFilter from '../CategoryFilter/CategoryFilter';
 import Button from '../Button/Button';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setForm, setLocation, toggleFeature } from '../../redux/filtersSlice';
+import {
+  setForm,
+  setLocation,
+  toggleFeature,
+  resetFilters,
+} from '../../redux/filtersSlice';
 import { getCampers, resetSearchResults } from '../../redux/campersSlice';
 
 const FiltersPanel = () => {
@@ -20,22 +24,22 @@ const FiltersPanel = () => {
   );
 
   const handleSearch = () => {
-    // 1) Скидаємо попередні результати
     dispatch(resetSearchResults());
-
-    // 2) Відправляємо запит з параметрами (бекенд може ігнорувати, але у thunk є client-side фільтрація)
-    const params = {
-      location: location?.trim() || undefined,
-      form: form || undefined,
-      ...Object.fromEntries(
-        Object.entries(features)
-          .filter(([, v]) => v)
-          .map(([k]) => [k, true])
-      ),
-    };
-
-    dispatch(getCampers(params));
+    dispatch(getCampers());
   };
+
+  const handleReset = () => {
+    dispatch(resetFilters());
+    dispatch(resetSearchResults());
+    dispatch(getCampers());
+  };
+
+  const hasActiveFilters = useMemo(() => {
+    const hasLocation = location.trim().length > 0;
+    const hasForm = form.trim().length > 0;
+    const hasFeatures = Object.values(features).some(Boolean);
+    return hasLocation || hasForm || hasFeatures;
+  }, [location, form, features]);
 
   return (
     <div>
@@ -56,8 +60,10 @@ const FiltersPanel = () => {
           />
         </div>
       </div>
+
       <div className={styles.categoryFilterWrapper}>
         <p className={styles.filtersLabel}>Filters</p>
+
         <CategoryFilter
           label="Vehicle equipment"
           categories={vehicleEquipmentCategories}
@@ -65,6 +71,7 @@ const FiltersPanel = () => {
           selected={selectedFeatures}
           onSelect={category => dispatch(toggleFeature(category.filterKey))}
         />
+
         <CategoryFilter
           label="Vehicle type"
           categories={vehicleTypeCategories}
@@ -73,7 +80,21 @@ const FiltersPanel = () => {
             dispatch(setForm(form === category.value ? '' : category.value))
           }
         />
-        <Button text="Search" className={styles.searchBtn} onClick={handleSearch} />
+
+        <div className={styles.btnContainer}>
+          <Button
+            text="Search"
+            className={styles.searchBtn}
+            onClick={handleSearch}
+          />
+          {hasActiveFilters && (
+            <Button
+              text="Reset"
+              className={styles.resetBtn}
+              onClick={handleReset}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

@@ -40,6 +40,10 @@ const CatalogPage = () => {
 
           {isLoading && items.length === 0 ? (
             <Loader />
+          ) : error === 'Request failed with status code 404' ? (
+            <p className={styles.infoMessage}>
+              Nothing was found for your request
+            </p>
           ) : error ? (
             <div>{error}</div>
           ) : (

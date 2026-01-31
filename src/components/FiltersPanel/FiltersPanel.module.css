@@ -53,6 +53,27 @@
   gap: 32px;
 }
 
+.btnContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .searchBtn {
   width: 166px;
+}
+
+button.resetBtn {
+  background-color: transparent;
+  border: 1px solid var(--button);
+  color: var(--button);
+
+  padding: 15px 48.5px;
+
+  transition: color 300 ease-in-out;
+}
+
+button.resetBtn:hover,
+button.resetBtn:focus-visible {
+  color: var(--white);
 }

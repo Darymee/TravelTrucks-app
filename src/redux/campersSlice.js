@@ -35,13 +35,12 @@ function applyClientFilters(items, filters) {
   });
 }
 
-/**
- * Формує params для бекенда.
- * Важливо: location НЕ кидаємо як substring (бо API може не підтримувати),
- * а фільтруємо на клієнті через applyClientFilters().
- */
 function buildServerParams(filters, page, limit) {
   const params = { page, limit };
+
+  if (filters?.location?.trim()) {
+    params.location = filters.location.trim();
+  }
 
   if (filters?.form) params.form = filters.form;
 
@@ -58,7 +57,6 @@ function buildServerParams(filters, page, limit) {
       continue;
     }
 
-    // Булеві поля: AC, kitchen, bathroom, TV, radio, refrigerator, microwave, gas, water
     params[key] = true;
   }
 
@@ -150,7 +148,7 @@ export const getCamperDetails = createAsyncThunk(
 
 const initialState = {
   items: [],
-  total: 0, // можемо показувати як totalFromServer (якщо треба)
+  total: 0,
   page: 1,
   limit: 4,
   hasMore: true,
@@ -188,11 +186,8 @@ const campersSlice = createSlice({
         state.items = action.payload.items ?? [];
         state.page = action.payload.page ?? 1;
 
-        // hasMore базуємо на тому, чи прийшла повна сторінка з сервера
         state.hasMore = (action.payload.receivedCount ?? 0) === state.limit;
 
-        // total з сервера можемо зберігати (але памʼятай: якщо location фільтруємо на клієнті,
-        // total буде не "точний" під location substring)
         state.total = action.payload.totalFromServer ?? state.items.length;
       })
       .addCase(getCampers.rejected, (state, action) => {

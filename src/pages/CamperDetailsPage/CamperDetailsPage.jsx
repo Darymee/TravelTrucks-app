@@ -32,6 +32,7 @@ const CamperDetailsPage = () => {
   }, [dispatch, id, camper]);
 
   if (isLoading) return <div>Loading...</div>;
+
   if (error) return <div>{error}</div>;
   if (!camper) return null;
 

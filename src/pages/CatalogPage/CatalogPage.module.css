@@ -18,3 +18,8 @@
   display: block;
   margin: 40px auto 0;
 }
+
+.infoMessage {
+  font-weight: 600;
+  text-align: center;
+}
