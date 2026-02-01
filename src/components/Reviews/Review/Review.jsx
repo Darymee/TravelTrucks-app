@@ -1,7 +1,10 @@
 import React from 'react';
 
-import styles from './Review.module.css';
+import PropTypes from 'prop-types';
+
 import RatingStars from '../../RatingStars/RatingStars';
+
+import styles from './Review.module.css';
 
 function getInitials(name = '') {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -29,6 +32,14 @@ const Review = ({ review }) => {
       <p className={styles.comment}>{review.comment}</p>
     </div>
   );
+};
+
+Review.propTypes = {
+  review: PropTypes.shape({
+    reviewer_name: PropTypes.string.isRequired,
+    reviewer_rating: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Review;

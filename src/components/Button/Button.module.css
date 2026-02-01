@@ -1,14 +1,14 @@
 .btn {
-  display: inline-block;
   padding: 16px 48.5px;
 
+  display: inline-block;
+
   font-weight: 500;
-  line-height: 1.5;
   letter-spacing: -0.005em;
   color: var(--white);
   background-color: var(--button);
   border-radius: 200px;
-  transition: background-color 300ms ease-in-out;
+  transition: background-color var(--transition-duration) var(--transition-function);
 }
 
 .btn:hover,

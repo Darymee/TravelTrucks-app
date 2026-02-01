@@ -1,21 +1,22 @@
-import { Helmet } from '@dr.pogodin/react-helmet';
 import React, { useEffect } from 'react';
-import FiltersPanel from '../../components/FiltersPanel/FiltersPanel';
-import CamperList from '../../components/CamperList/CamperList';
-import Loader from '../../components/Loader/Loader';
-import Button from '../../components/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Banner from '../../components/Banner/Banner';
+import Button from '../../components/Button/Button';
+import CamperList from '../../components/CamperList/CamperList';
+import FiltersPanel from '../../components/FiltersPanel/FiltersPanel';
+import Loader from '../../components/Loader/Loader';
+import PageMeta from '../../components/PageMeta/PageMeta';
 import {
   getCampers,
-  selectCampersItems,
-  selectCampersIsLoading,
+  loadMoreCampers,
   selectCampersError,
   selectCampersHasMore,
-  loadMoreCampers,
+  selectCampersIsLoading,
+  selectCampersItems,
 } from '../../redux/campersSlice';
 
 import styles from './CatalogPage.module.css';
-import Banner from '../../components/Banner/Banner';
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
@@ -30,10 +31,10 @@ const CatalogPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Catalog | TravelTrucks</title>
-        <meta name="description" content="Browse available campers" />
-      </Helmet>
+      <PageMeta
+        title="Catalog | TravelTrucks"
+        description="Browse available campers"
+      />
 
       <div className="container">
         <div className={styles.content}>

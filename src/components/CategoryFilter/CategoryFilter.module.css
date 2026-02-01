@@ -41,11 +41,9 @@
   background-color: var(--white);
 
   font-weight: 500;
-  line-height: 1.5;
   letter-spacing: -0.005em;
-  color: var(--main);
 
-  transition: border-color 300ms ease-in-out;
+  transition: border-color var(--transition-duration) var(--transition-function);
 }
 
 .categoryButton:hover,

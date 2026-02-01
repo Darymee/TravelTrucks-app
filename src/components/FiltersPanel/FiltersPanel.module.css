@@ -4,7 +4,6 @@
 
 .label {
   display: block;
-  line-height: 1.5;
   color: #10182899;
 
   margin-bottom: 8px;
@@ -30,20 +29,16 @@
 
   border-radius: 12px;
 
-  color: var(--main);
   background-color: var(--inputs);
   border: none;
 
-  line-height: 1.5;
 }
 
 .input::placeholder {
-  color: var(--main);
 }
 
 .filtersLabel {
   font-weight: 500;
-  line-height: 1.5;
   color: var(--text);
 }
 
@@ -70,10 +65,15 @@ button.resetBtn {
 
   padding: 15px 48.5px;
 
-  transition: color 300 ease-in-out;
+  transition:
+    color var(--transition-duration) var(--transition-function),
+    background-color var(--transition-duration) var(--transition-function),
+    border-color var(--transition-duration) var(--transition-function);
 }
 
 button.resetBtn:hover,
 button.resetBtn:focus-visible {
+  background-color: var(--button);
+  border-color: var(--button);
   color: var(--white);
 }

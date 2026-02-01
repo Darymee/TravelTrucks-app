@@ -1,13 +1,15 @@
 import React from 'react';
-import { Formik } from 'formik';
+
 import * as Yup from 'yup';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { Formik } from 'formik';
+import { toast } from 'react-toastify';
 
-import styles from './BookingForm.module.css';
 import Button from '../Button/Button';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { toast } from 'react-toastify';
+
+import 'react-datepicker/dist/react-datepicker.css';
+import styles from './BookingForm.module.css';
 
 const validationSchema = Yup.object({
   name: Yup.string()

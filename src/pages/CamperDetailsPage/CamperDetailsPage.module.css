@@ -6,11 +6,9 @@
   display: inline-block;
   margin-bottom: 12px;
 
-  color: var(--main);
   font-weight: 500;
-  line-height: 1.5;
 
-  transition: color 300ms ease-in-out;
+  transition: color var(--transition-duration) var(--transition-function);
 }
 
 .backLink:hover,
@@ -66,14 +64,12 @@
 }
 
 .description {
-  line-height: 1.5;
   color: var(--text);
   margin-bottom: 60px;
 }
 
 .notFound {
   margin-top: 12px;
-  line-height: 1.5;
   color: var(--text);
 }
 
@@ -92,11 +88,10 @@
   font-weight: 600;
   font-size: 20px;
   line-height: 1.2;
-  color: var(--main);
   text-decoration: none;
   padding-bottom: 24px;
 
-  transition: color 300ms ease-in-out;
+  transition: color var(--transition-duration) var(--transition-function);
 }
 
 .subNavLink:hover,
@@ -115,7 +110,7 @@
 
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 300ms ease;
+  transition: transform var(--transition-duration) var(--transition-function);
 }
 
 .active::after {

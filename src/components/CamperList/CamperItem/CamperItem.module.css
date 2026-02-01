@@ -26,7 +26,6 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  display: block;
 }
 
 @media (min-width: 1024px) {
@@ -69,7 +68,16 @@
 
 .heartBtnIcon {
   fill: var(--main);
-  transition: fill 300ms ease-in-out;
+  stroke: transparent;
+  stroke-width: 1.5px;
+  transition:
+    fill var(--transition-duration) var(--transition-function),
+    stroke var(--transition-duration) var(--transition-function);
+}
+
+.heartBtn:hover,
+.heartBtn:focus-visible {
+  outline: none;
 }
 
 .heartBtn:hover .heartBtnIcon,
@@ -81,13 +89,17 @@
   fill: var(--button);
 }
 
+.heartBtn.heartBtnActive:hover .heartBtnIcon,
+.heartBtn.heartBtnActive:focus-visible .heartBtnIcon {
+  fill: var(--main);
+}
+
 .camperDescription {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
   color: var(--text);
-  line-height: 1.5;
 
   margin-bottom: 24px;
 }

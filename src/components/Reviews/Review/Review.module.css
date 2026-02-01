@@ -19,7 +19,6 @@
 
   font-weight: 600;
   font-size: 24px;
-  line-height: 1.5;
 
   color: var(--button);
 }
@@ -32,10 +31,8 @@
 
 .userName {
   font-weight: 500;
-  line-height: 1.5;
 }
 
 .comment {
-  line-height: 1.5;
   color: var(--text);
 }

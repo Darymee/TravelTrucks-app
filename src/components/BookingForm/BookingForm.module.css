@@ -13,7 +13,6 @@
 }
 
 .formDescription {
-  line-height: 1.5;
   color: var(--grey);
   margin-bottom: 24px;
 }
@@ -28,14 +27,12 @@
 
   border: 1px solid var(--inputs);
 
-  line-height: 1.5;
-  color: var(--main);
 }
 
 .inputField {
   margin-bottom: 7px;
 
-  transition: border-color 300ms ease-in-out;
+  transition: border-color var(--transition-duration) var(--transition-function);
 }
 
 .inputField:not(:first-child) {

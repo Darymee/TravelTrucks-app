@@ -1,56 +1,61 @@
 import React from 'react';
-import Category from '../Category/Category';
+
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import EquipmentCategories from '../Category/EquipmentCategories';
+import { selectCamperDetails } from '../../redux/campersSlice';
 
 import styles from './Features.module.css';
-import { vehicleEquipmentCategories } from '../FiltersPanel/constans';
-import { useSelector } from 'react-redux';
-import { selectCamperDetails } from '../../redux/campersSlice';
-import { useParams } from 'react-router-dom';
 
 const Features = () => {
   const { id } = useParams();
   const camper = useSelector(state => selectCamperDetails(state, id));
 
-  const availableCategories = vehicleEquipmentCategories.filter(c =>
-    c.isAvailable(camper)
-  );
+  if (!camper) return null;
 
   return (
     <div className={styles.content}>
-      <ul className={styles.categoryList}>
-        {availableCategories.map(category => (
-          <li key={category.label}>
-            <Category category={category} />
-          </li>
-        ))}
-      </ul>
+      <EquipmentCategories camper={camper} className={styles.categoryList} />
       <div>
         <h3 className={styles.infoTitle}>Vehicle details</h3>
         <div className={styles.tableInfo}>
-          <p className={styles.row}>
-            <span>Form</span>
-            <span>{camper.form}</span>
-          </p>
-          <p className={styles.row}>
-            <span>Length</span>
-            <span>{camper.length}</span>
-          </p>
-          <p className={styles.row}>
-            <span>Width</span>
-            <span>{camper.width}</span>
-          </p>
-          <p className={styles.row}>
-            <span>Height</span>
-            <span>{camper.height}</span>
-          </p>
-          <p className={styles.row}>
-            <span>Tank</span>
-            <span>{camper.tank}</span>
-          </p>
-          <p className={styles.row}>
-            <span>Consumption</span>
-            <span>{camper.consumption}</span>
-          </p>
+          {camper.form && (
+            <p className={styles.row}>
+              <span>Form</span>
+              <span>{camper.form}</span>
+            </p>
+          )}
+          {camper.length && (
+            <p className={styles.row}>
+              <span>Length</span>
+              <span>{camper.length}</span>
+            </p>
+          )}
+          {camper.width && (
+            <p className={styles.row}>
+              <span>Width</span>
+              <span>{camper.width}</span>
+            </p>
+          )}
+          {camper.height && (
+            <p className={styles.row}>
+              <span>Height</span>
+              <span>{camper.height}</span>
+            </p>
+          )}
+          {camper.tank && (
+            <p className={styles.row}>
+              <span>Tank</span>
+              <span>{camper.tank}</span>
+            </p>
+          )}
+          {camper.consumption && (
+            <p className={styles.row}>
+              <span>Consumption</span>
+              <span>{camper.consumption}</span>
+            </p>
+          )}
         </div>
       </div>
     </div>

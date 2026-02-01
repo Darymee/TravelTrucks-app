@@ -1,6 +1,10 @@
-// categories.ts
 export const vehicleEquipmentCategories = [
-  { label: 'AC', icon: 'icon-ac', filterKey: 'AC', isAvailable: v => Boolean(v.AC) },
+  {
+    label: 'AC',
+    icon: 'icon-ac',
+    filterKey: 'AC',
+    isAvailable: v => Boolean(v.AC),
+  },
   {
     label: 'Automatic',
     icon: 'icon-diagram',
@@ -13,7 +17,12 @@ export const vehicleEquipmentCategories = [
     filterKey: 'kitchen',
     isAvailable: v => Boolean(v.kitchen),
   },
-  { label: 'TV', icon: 'icon-tv', filterKey: 'TV', isAvailable: v => Boolean(v.TV) },
+  {
+    label: 'TV',
+    icon: 'icon-tv',
+    filterKey: 'TV',
+    isAvailable: v => Boolean(v.TV),
+  },
   {
     label: 'Bathroom',
     icon: 'icon-bathroom',
@@ -26,7 +35,12 @@ export const vehicleEquipmentCategories = [
     filterKey: 'petrol',
     isAvailable: v => v.engine === 'petrol',
   },
-  { label: 'Radio', icon: 'icon-radio', filterKey: 'radio', isAvailable: v => Boolean(v.radio) },
+  {
+    label: 'Radio',
+    icon: 'icon-radio',
+    filterKey: 'radio',
+    isAvailable: v => Boolean(v.radio),
+  },
   {
     label: 'Refrigerator',
     icon: 'icon-refrigerator',
@@ -39,12 +53,21 @@ export const vehicleEquipmentCategories = [
     filterKey: 'microwave',
     isAvailable: v => Boolean(v.microwave),
   },
-  { label: 'Gas', icon: 'icon-gas', filterKey: 'gas', isAvailable: v => Boolean(v.gas) },
-  { label: 'Water', icon: 'icon-water', filterKey: 'water', isAvailable: v => Boolean(v.water) },
+  {
+    label: 'Gas',
+    icon: 'icon-gas',
+    filterKey: 'gas',
+    isAvailable: v => Boolean(v.gas),
+  },
+  {
+    label: 'Water',
+    icon: 'icon-water',
+    filterKey: 'water',
+    isAvailable: v => Boolean(v.water),
+  },
 ];
 
 export const vehicleTypeCategories = [
-  // value - очікувані значення поля `form` у даних (під GoIT/mockAPI задачі)
   { label: 'Van', icon: 'icon-van', value: 'panelTruck' },
   {
     label: 'Fully Integrated',

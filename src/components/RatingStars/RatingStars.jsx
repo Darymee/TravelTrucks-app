@@ -1,7 +1,10 @@
 import React from 'react';
 
-import styles from './RatingStars.module.css';
+import PropTypes from 'prop-types';
+
 import Icon from '../Icon/Icon';
+
+import styles from './RatingStars.module.css';
 
 function clampRating(rating) {
   const n = Number(rating);
@@ -25,6 +28,10 @@ const RatingStars = ({ rating }) => {
       ))}
     </div>
   );
+};
+
+RatingStars.propTypes = {
+  rating: PropTypes.number,
 };
 
 export default RatingStars;

@@ -1,15 +1,17 @@
 import React from 'react';
+
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from '../../Icon/Icon';
-import { vehicleEquipmentCategories } from '../../FiltersPanel/constans';
+
 import Category from '../../Category/Category';
-
-import { toggleFavorite } from '../../../redux/favoritesSlice';
-
-import styles from './CamperItem.module.css';
-import StyledLink from '../../StyledLink/StyledLink';
+import Icon from '../../Icon/Icon';
 import InfoContent from '../../InfoContent/InfoContent';
 import Price from '../../Price/Price';
+import StyledLink from '../../StyledLink/StyledLink';
+import { toggleFavorite } from '../../../redux/favoritesSlice';
+import { vehicleEquipmentCategories } from '../../FiltersPanel/constants';
+
+import styles from './CamperItem.module.css';
 
 const CamperItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -36,14 +38,16 @@ const CamperItem = ({ item }) => {
             <Price price={item.price} />
             <button
               type="button"
-              aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+              aria-label={
+                isFavorite ? 'Remove from favorites' : 'Add to favorites'
+              }
               className={`${styles.heartBtn} ${
                 isFavorite ? styles.heartBtnActive : ''
               }`}
               onClick={() => dispatch(toggleFavorite(item.id))}
             >
               <Icon
-                name={isFavorite ? 'icon-heart-filled' : 'icon-heart'}
+                name="icon-heart"
                 width={26}
                 height={24}
                 className={styles.heartBtnIcon}
@@ -74,6 +78,47 @@ const CamperItem = ({ item }) => {
       </div>
     </div>
   );
+};
+
+CamperItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    rating: PropTypes.number,
+    location: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        reviewer_name: PropTypes.string.isRequired,
+        reviewer_rating: PropTypes.number.isRequired,
+        comment: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    gallery: PropTypes.arrayOf(
+      PropTypes.shape({
+        thumb: PropTypes.string.isRequired,
+        original: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    form: PropTypes.string,
+    length: PropTypes.string,
+    width: PropTypes.string,
+    height: PropTypes.string,
+    tank: PropTypes.string,
+    consumption: PropTypes.string,
+    transmission: PropTypes.string,
+    engine: PropTypes.string,
+    AC: PropTypes.bool,
+    bathroom: PropTypes.bool,
+    kitchen: PropTypes.bool,
+    TV: PropTypes.bool,
+    radio: PropTypes.bool,
+    refrigerator: PropTypes.bool,
+    microwave: PropTypes.bool,
+    gas: PropTypes.bool,
+    water: PropTypes.bool,
+  }).isRequired,
 };
 
 export default CamperItem;

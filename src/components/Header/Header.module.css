@@ -20,11 +20,9 @@
 }
 
 .link {
-  color: var(--main);
   font-weight: 500;
-  line-height: 1.5;
 
-  transition: color 300ms ease-in-out;
+  transition: color var(--transition-duration) var(--transition-function);
 }
 
 .link:hover {

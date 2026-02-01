@@ -1,13 +1,8 @@
+import PropTypes from 'prop-types';
+
 import spriteUrl from '../../assets/sprite.svg';
 
-export default function Icon({
-  name,
-  size = 24,
-  width,
-  height,
-  className,
-  ...props
-}) {
+const Icon = ({ name, size = 24, width, height, className, ...props }) => {
   const w = width ?? size;
   const h = height ?? size;
 
@@ -16,4 +11,14 @@ export default function Icon({
       <use href={`${spriteUrl}#${name}`} />
     </svg>
   );
-}
+};
+
+export default Icon;
+
+Icon.propTypes = {
+  name: PropTypes.string.isRequired,
+  size: PropTypes.number,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  className: PropTypes.string,
+};

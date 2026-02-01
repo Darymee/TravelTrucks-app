@@ -1,12 +1,11 @@
 import React from 'react';
+
+import PropTypes from 'prop-types';
+
 import Icon from '../Icon/Icon';
 
 import styles from './CategoryFilter.module.css';
 
-/**
- * @param {{label: string, categories: Array<{label: string, icon: string, value?: string, filterKey?: string}>,
- * selected: string|string[], multiple?: boolean, onSelect: (category: any)=>void}} props
- */
 const CategoryFilter = ({
   label,
   categories,
@@ -44,6 +43,24 @@ const CategoryFilter = ({
       </ul>
     </>
   );
+};
+
+CategoryFilter.propTypes = {
+  label: PropTypes.string.isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+      value: PropTypes.string,
+      filterKey: PropTypes.string,
+    })
+  ).isRequired,
+  selected: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]).isRequired,
+  multiple: PropTypes.bool,
+  onSelect: PropTypes.func,
 };
 
 export default CategoryFilter;

@@ -1,28 +1,30 @@
-import React, { useMemo } from 'react';
-import Icon from '../Icon/Icon';
-import styles from './FiltersPanel.module.css';
-import { vehicleEquipmentCategories, vehicleTypeCategories } from './constans';
-import CategoryFilter from '../CategoryFilter/CategoryFilter';
-import Button from '../Button/Button';
-
+import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setForm,
-  setLocation,
-  toggleFeature,
-  resetFilters,
-} from '../../redux/filtersSlice';
+
+import Button from '../Button/Button';
+import CategoryFilter from '../CategoryFilter/CategoryFilter';
+import Icon from '../Icon/Icon';
+import { vehicleEquipmentCategories, vehicleTypeCategories } from './constants';
 import {
   getCampers,
   resetSearchResults,
   selectCampersIsLoading,
 } from '../../redux/campersSlice';
+import {
+  resetFilters,
+  setForm,
+  setLocation,
+  toggleFeature,
+} from '../../redux/filtersSlice';
+
+import styles from './FiltersPanel.module.css';
 
 const FiltersPanel = () => {
   const dispatch = useDispatch();
   const { location, form, features } = useSelector(state => state.filters);
 
   const isLoading = useSelector(selectCampersIsLoading);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const selectedFeatures = useMemo(
     () => Object.keys(features).filter(k => features[k]),
@@ -30,14 +32,18 @@ const FiltersPanel = () => {
   );
 
   const handleSearch = () => {
+    setHasSearched(true);
     dispatch(resetSearchResults());
     dispatch(getCampers());
   };
 
   const handleReset = () => {
     dispatch(resetFilters());
-    dispatch(resetSearchResults());
-    dispatch(getCampers());
+    if (hasSearched) {
+      dispatch(resetSearchResults());
+      dispatch(getCampers());
+      setHasSearched(false);
+    }
   };
 
   const hasActiveFilters = useMemo(() => {
@@ -90,7 +96,7 @@ const FiltersPanel = () => {
         <div className={styles.btnContainer}>
           <Button
             text="Search"
-            disabled={isLoading}
+            disabled={!hasActiveFilters || isLoading}
             className={styles.searchBtn}
             onClick={handleSearch}
           />

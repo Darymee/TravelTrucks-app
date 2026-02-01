@@ -1,3 +1,30 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf')
+    format('truetype');
+}
+
 :root {
   --main: #101828;
   --text: #475467;
@@ -11,6 +38,8 @@
   --button-hover: #d84343;
   --star: #ffc531;
   --error: #d32f2f;
+  --transition-duration: 300ms;
+  --transition-function: ease-in-out;
   font-family:
     'Inter',
     -apple-system,
