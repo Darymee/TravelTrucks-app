@@ -77,6 +77,10 @@
   fill: var(--button);
 }
 
+.heartBtnActive .heartBtnIcon {
+  fill: var(--button);
+}
+
 .camperDescription {
   white-space: nowrap;
   overflow: hidden;
