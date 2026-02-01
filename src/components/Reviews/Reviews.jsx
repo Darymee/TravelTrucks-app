@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Review from './Review/Review';
@@ -11,11 +11,21 @@ import styles from './Reviews.module.css';
 const Reviews = () => {
   const { id } = useParams();
   const camper = useSelector(state => selectCamperDetails(state, id));
+  const { hash } = useLocation();
+
+  React.useEffect(() => {
+    if (hash !== '#reviews') return;
+
+    const anchor = document.getElementById('reviews');
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [hash]);
 
   if (!camper) return null;
 
   return (
-    <>
+    <section id="reviews">
       {camper.reviews.length ? (
         <ul className={styles.reviews}>
           {camper.reviews.map((review, index) => (
@@ -27,7 +37,7 @@ const Reviews = () => {
       ) : (
         <p>No reviews so far.</p>
       )}
-    </>
+    </section>
   );
 };
 

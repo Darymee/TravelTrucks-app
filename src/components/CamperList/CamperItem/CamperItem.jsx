@@ -17,6 +17,8 @@ const CamperItem = ({ item }) => {
   const dispatch = useDispatch();
   const favoriteIds = useSelector(state => state.favorites.ids);
   const isFavorite = favoriteIds.includes(String(item.id));
+  const placeholderImage = '/images/placeholder.svg';
+  const coverImage = item.gallery?.[0]?.thumb || placeholderImage;
 
   const availableCategories = vehicleEquipmentCategories.filter(c =>
     c.isAvailable(item)
@@ -26,7 +28,7 @@ const CamperItem = ({ item }) => {
     <div className={styles.camperItem}>
       <div className={styles.imageWrapper}>
         <img
-          src={item.gallery[0].thumb}
+          src={coverImage}
           alt={`${item.name} picture`}
           className={styles.image}
         />
@@ -59,7 +61,7 @@ const CamperItem = ({ item }) => {
           review={item.reviews}
           rating={item.rating}
           location={item.location}
-          reviewsLink={`/catalog/${item.id}/reviews`}
+          reviewsLink={`/catalog/${item.id}/reviews#reviews`}
         />
         <p className={styles.camperDescription}>{item.description}</p>
         <ul className={styles.categoryList}>
