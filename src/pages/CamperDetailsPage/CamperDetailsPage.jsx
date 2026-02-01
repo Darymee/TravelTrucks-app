@@ -70,6 +70,7 @@ const CamperDetailsPage = () => {
             review={camper.reviews}
             rating={camper.rating}
             location={camper.location}
+            reviewsLink="reviews"
           />
         </div>
         <div className={styles.priceContainer}>

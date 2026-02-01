@@ -1,5 +1,6 @@
 .btn {
   padding: 16px 48.5px;
+  height: 56px;
 
   display: inline-block;
 
@@ -8,7 +9,8 @@
   color: var(--white);
   background-color: var(--button);
   border-radius: 200px;
-  transition: background-color var(--transition-duration) var(--transition-function);
+  transition: background-color var(--transition-duration)
+    var(--transition-function);
 }
 
 .btn:hover,

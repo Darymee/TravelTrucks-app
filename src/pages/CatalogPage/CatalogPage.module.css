@@ -17,6 +17,18 @@
 .loadMoreBtn {
   display: block;
   margin: 40px auto 0;
+
+  background-color: var(--white);
+  border: 1px solid var(--light-grey);
+  color: var(--main);
+
+  transition: border-color var(--transition-duration) var(--transition-function);
+}
+
+.loadMoreBtn:hover,
+.loadMoreBtn:focus {
+  background-color: var(--white);
+  border-color: var(--button-hover);
 }
 
 .infoMessage {

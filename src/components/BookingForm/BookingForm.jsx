@@ -29,6 +29,8 @@ const validationSchema = Yup.object({
 });
 
 const BookingForm = () => {
+  const [isCalendarOpen, setIsCalendarOpen] = React.useState(false);
+
   return (
     <div className={styles.formContainer}>
       <h3 className={styles.formTitle}>Book your campervan now</h3>
@@ -102,7 +104,13 @@ const BookingForm = () => {
                 selected={values.date}
                 onChange={date => setFieldValue('date', date)}
                 onBlur={() => setFieldTouched('date', true)}
-                placeholderText="Booking date*"
+                onCalendarOpen={() => setIsCalendarOpen(true)}
+                onCalendarClose={() => setIsCalendarOpen(false)}
+                placeholderText={
+                  isCalendarOpen
+                    ? 'Select a date between today'
+                    : 'Booking date*'
+                }
                 dateFormat="dd.MM.yyyy"
                 minDate={new Date()}
                 popperPlacement="bottom-start"

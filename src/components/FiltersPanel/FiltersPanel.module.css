@@ -18,7 +18,7 @@
   top: 18px;
   left: 20px;
   pointer-events: none;
-  fill: var(--main);
+  fill: var(--text);
 }
 
 .input {
@@ -31,10 +31,11 @@
 
   background-color: var(--inputs);
   border: none;
-
 }
 
-.input::placeholder {
+.inputWrapper:hover .inputIcon,
+.inputWrapper:focus-within .inputIcon {
+  fill: var(--main);
 }
 
 .filtersLabel {

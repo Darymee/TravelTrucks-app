@@ -59,6 +59,7 @@ const CamperItem = ({ item }) => {
           review={item.reviews}
           rating={item.rating}
           location={item.location}
+          reviewsLink={`/catalog/${item.id}/reviews`}
         />
         <p className={styles.camperDescription}>{item.description}</p>
         <ul className={styles.categoryList}>
