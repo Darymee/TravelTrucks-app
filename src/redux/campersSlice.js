@@ -63,10 +63,6 @@ function buildServerParams(filters, page, limit) {
   return params;
 }
 
-/**
- * NEW SEARCH (page=1)
- * Повертає { items, totalFromServer, receivedCount, page }
- */
 export const getCampers = createAsyncThunk(
   'campers/getAll',
   async (_, thunkAPI) => {
@@ -78,7 +74,7 @@ export const getCampers = createAsyncThunk(
       const page = 1;
       const params = buildServerParams(filters, page, limit);
 
-      const data = await fetchCampers(params); // очікуємо { total, items }
+      const data = await fetchCampers(params);
       const rawItems = data?.items ?? data ?? [];
       const filteredItems = applyClientFilters(rawItems, filters);
 
@@ -94,9 +90,6 @@ export const getCampers = createAsyncThunk(
   }
 );
 
-/**
- * LOAD MORE (page = currentPage + 1)
- */
 export const loadMoreCampers = createAsyncThunk(
   'campers/loadMore',
   async (_, thunkAPI) => {
@@ -139,9 +132,26 @@ export const getCamperDetails = createAsyncThunk(
   'campers/getById',
   async (id, thunkAPI) => {
     try {
-      return await fetchCamperById(id);
+      const camper = await fetchCamperById(id);
+
+      if (!camper || camper.id == null) {
+        return thunkAPI.rejectWithValue('Camper not found');
+      }
+
+      return camper;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e?.message ?? 'Failed to load camper');
+      const status = e?.response?.status;
+
+      if (status === 404) {
+        return thunkAPI.rejectWithValue('Camper not found');
+      }
+
+      const messageFromServer =
+        e?.response?.data?.message || e?.response?.data?.error;
+
+      return thunkAPI.rejectWithValue(
+        messageFromServer ?? e?.message ?? 'Failed to load camper'
+      );
     }
   }
 );

@@ -15,8 +15,6 @@ const Features = () => {
     c.isAvailable(camper)
   );
 
-  console.log(camper);
-
   return (
     <div className={styles.content}>
       <ul className={styles.categoryList}>

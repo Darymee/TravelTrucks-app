@@ -15,6 +15,7 @@ import {
 } from '../../redux/campersSlice';
 
 import styles from './CatalogPage.module.css';
+import Banner from '../../components/Banner/Banner';
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
@@ -41,9 +42,12 @@ const CatalogPage = () => {
           {isLoading && items.length === 0 ? (
             <Loader />
           ) : error === 'Request failed with status code 404' ? (
-            <p className={styles.infoMessage}>
-              Nothing was found for your request
-            </p>
+            <div>
+              <p className={styles.infoMessage}>
+                Nothing was found for your request
+              </p>
+              <Banner />
+            </div>
           ) : error ? (
             <div>{error}</div>
           ) : (

@@ -16,7 +16,7 @@ const Hero = () => {
           <StyledLink
             to="/catalog"
             className={styles.viewBtn}
-            text="View Catalog"
+            text="View Now"
           />
         </div>
       </div>

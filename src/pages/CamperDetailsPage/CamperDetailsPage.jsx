@@ -14,6 +14,8 @@ import Price from '../../components/Price/Price';
 
 import styles from './CamperDetailsPage.module.css';
 import BookingForm from '../../components/BookingForm/BookingForm';
+import Loader from '../../components/Loader/Loader';
+import Banner from '../../components/Banner/Banner';
 
 const CamperDetailsPage = () => {
   const dispatch = useDispatch();
@@ -23,18 +25,32 @@ const CamperDetailsPage = () => {
   const isLoading = useSelector(selectCamperDetailsLoading);
   const error = useSelector(selectCamperDetailsError);
 
-  console.log(camper);
-
   useEffect(() => {
     if (!id) return;
 
     if (!camper) dispatch(getCamperDetails(id));
   }, [dispatch, id, camper]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
 
-  if (error) return <div>{error}</div>;
-  if (!camper) return null;
+  if (error || !camper) {
+    const message =
+      error || `There is no information about the camper with ID “${id}`;
+
+    return (
+      <div className="container">
+        <div className={styles.content}>
+          <Link to="/catalog" className={styles.backLink}>
+            Back to Catalog
+          </Link>
+
+          <h2 className={styles.title}>Data unavailable</h2>
+          <p className={styles.notFound}>{message}</p>
+          <Banner />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

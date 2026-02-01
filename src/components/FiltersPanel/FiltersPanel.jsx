@@ -12,11 +12,17 @@ import {
   toggleFeature,
   resetFilters,
 } from '../../redux/filtersSlice';
-import { getCampers, resetSearchResults } from '../../redux/campersSlice';
+import {
+  getCampers,
+  resetSearchResults,
+  selectCampersIsLoading,
+} from '../../redux/campersSlice';
 
 const FiltersPanel = () => {
   const dispatch = useDispatch();
   const { location, form, features } = useSelector(state => state.filters);
+
+  const isLoading = useSelector(selectCampersIsLoading);
 
   const selectedFeatures = useMemo(
     () => Object.keys(features).filter(k => features[k]),
@@ -84,12 +90,14 @@ const FiltersPanel = () => {
         <div className={styles.btnContainer}>
           <Button
             text="Search"
+            disabled={isLoading}
             className={styles.searchBtn}
             onClick={handleSearch}
           />
           {hasActiveFilters && (
             <Button
               text="Reset"
+              disabled={isLoading}
               className={styles.resetBtn}
               onClick={handleReset}
             />
